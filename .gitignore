@@ -1,3 +1,8 @@
 __pycache__
 .mypy_cache/
 models/
+checkpoint
+samples
+train.sh
+*.npz
+*.txt

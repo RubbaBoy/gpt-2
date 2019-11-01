@@ -1,3 +1,6 @@
+
+Reference:  ["Beginner’s Guide to Retrain GPT-2 (117M) to Generate Custom Text Content"](https://medium.com/@ngwaifoong92/beginners-guide-to-retrain-gpt-2-117m-to-generate-custom-text-content-8bb5363d8b7f)
+
 # gpt-2
 
 Code from the paper ["Language Models are Unsupervised Multitask Learners"](https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf).
@@ -6,29 +9,74 @@ We have currently released small (117M parameter) and medium (345M parameter) ve
 
 See more details in our [blog post](https://blog.openai.com/better-language-models/).
 
-## Usage
+## This Fork
 
-This repository is meant to be a starting point for researchers and engineers to experiment with GPT-2.
+This fork by RubbaBoy is just to have some improvements of nshepperd's fork, with some missing requirements, moved files for ease of use, and some shell commands to make training this much easier and faster to set up. Everything below aside from the Citation and License sections are made by RubbaBoy.
 
-### Some caveats
+This just consists of small changes for myself, however if you want stuff changed let me know.
 
-- GPT-2 models' robustness and worst case behaviors are not well-understood.  As with any machine-learned model, carefully evaluate GPT-2 for your use case, especially if used without fine-tuning or in safety-critical applications where reliability is important.
-- The dataset our GPT-2 models were trained on contains many texts with [biases](https://twitter.com/TomerUllman/status/1101485289720242177) and factual inaccuracies, and thus GPT-2 models are likely to be biased and inaccurate as well.
-- To avoid having samples mistaken as human-written, we recommend clearly labeling samples as synthetic before wide dissemination.  Our models are often incoherent or inaccurate in subtle ways, which takes more than a quick read for a human to notice.
 
-### Work with us
+# Installation
 
-Please [let us know](mailto:languagequestions@openai.com) if you’re doing interesting research with or working on applications of GPT-2!  We’re especially interested in hearing from and potentially working with those who are studying
-- Potential malicious use cases and defenses against them (e.g. the detectability of synthetic text)
-- The extent of problematic content (e.g. bias) being baked into the models and effective mitigations
+Git clone this repository, and `cd` into directory for remaining commands
 
-## Development
+```
+git clone https://github.com/RubbaBoy/gpt-2.git && cd gpt-2
+```
 
-See [DEVELOPERS.md](./DEVELOPERS.md)
+Then, run
 
-## Contributors
+```
+./setup.sh trainingData.txt
+```
 
-See [CONTRIBUTORS.md](./CONTRIBUTORS.md)
+with the training data file as an optional parameter. This script automatically downloads the 117M model, installs python dependencies, etc. as long as Python 3+ is installed. If the data file is not supplied as an argument, manually put it in the `train.sh` file.
+
+For easy training, you can simply run the generated file
+
+```
+./train
+```
+
+
+## Samples
+
+To get samples of your network, run
+
+```
+./samplegen.sh modelNumber checkpointName sampleName
+```
+
+This should only be ran if a newer checkpoint has been saved, or if you are getting samples for the first time. All parameters are optional. The parameters are as follows:
+
+**modelNumber** This parameter is **suggested**, though not required. The number of the model to copy over. If this is unset, all models will be copied over and the one determined by the checkpoint file will be used.
+
+**checkpointName** The name of the checkpoint. Default as `run1`
+
+**sampleName** An arbitrary name for the sample. Default as `sample`
+
+An example of this command being ran for the model number `500` with no other options changed previously, is:
+
+```
+./samplegen.sh 500
+```
+
+
+
+After running that command, you can either run conditional samples (Requiring user input) via something like:
+
+```
+python src/interactive_conditional_samples.py --temperature 0.8 --top_k 40 --model_name sample
+```
+
+Or samples requiring no user input:
+
+```
+python src/generate_unconditional_samples.py --temperature 0.8 --top_k 40 --model_name sample
+```
+
+You can check the args and stuff of the commands, but they're pretty simple. Replace `sample` with whatever your `sampleName` argument was in the command above.
+
 
 ## Citation
 
@@ -40,12 +88,6 @@ Please use the following bibtex entry:
   year={2019}
 }
 ```
-
-## Future work
-
-We may release code for evaluating the models on various benchmarks.
-
-We are still considering release of the larger models.
 
 ## License
 
