@@ -263,6 +263,8 @@ def main():
                 if args.val_every > 0 and (counter % args.val_every == 0 or counter == 1):
                     validation()
 
+                temp_time = time.time()
+
                 if args.accumulate_gradients > 1:
                     sess.run(opt_reset)
                     for _ in range(args.accumulate_gradients):
@@ -280,12 +282,13 @@ def main():
                             avg_loss[1] * 0.99 + 1.0)
 
                 print(
-                    '[{counter} | {time:2.2f}] loss={loss:2.2f} avg={avg:2.2f}'
+                    '[{counter} | {time:2.2f}] loss={loss:2.2f} avg={avg:2.2f} @ {dur:2.2f}s'
                     .format(
                         counter=counter,
                         time=time.time() - start_time,
                         loss=v_loss,
-                        avg=avg_loss[0] / avg_loss[1]))
+                        avg=avg_loss[0] / avg_loss[1],
+                        dur=time.time() - temp_time))
 
                 counter += 1
         except KeyboardInterrupt:
