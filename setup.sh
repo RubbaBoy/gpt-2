@@ -4,8 +4,8 @@ majorMinor=$(echo $pyVer | cut -c8-)
 if [[ $majorMinor == "3."* ]]
 then
   echo "Python version is good!"
-  python download_model.py 117M
   pip install -r requirements.txt
+  python download_model.py 117M
 
   npzFile="<npz file>"
   npzSet=false
