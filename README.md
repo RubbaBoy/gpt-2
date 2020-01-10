@@ -27,10 +27,10 @@ git clone https://github.com/RubbaBoy/gpt-2.git && cd gpt-2
 Then, run
 
 ```
-./setup.sh trainingData.txt
+./setup.sh 117M trainingData.txt
 ```
 
-with the training data file as an optional parameter. This script automatically downloads the 117M model, installs python dependencies, etc. as long as Python 3+ is installed. If the data file is not supplied as an argument, manually put it in the `train.sh` file.
+with the training data file as an optional parameter. The 117M is the name of the model, with the following accepted values: `117M`, `124M`, `345M`, `355M`, `774M`, `1558M`. This script automatically downloads the model, installs python dependencies, etc. as long as Python 3+ is installed. If the data file is not supplied as an argument, manually put it in the `train.sh` file.
 
 For easy training, you can simply run the generated file
 
@@ -44,10 +44,12 @@ For easy training, you can simply run the generated file
 To get samples of your network, run
 
 ```
-./samplegen.sh modelNumber checkpointName sampleName
+./samplegen.sh modelName modelNumber checkpointName sampleName
 ```
 
 This should only be ran if a newer checkpoint has been saved, or if you are getting samples for the first time. All parameters are optional. The parameters are as follows:
+
+**modelName** The name of the GPT-2 model. Accepted values: `117M`, `124M`, `345M`, `355M`, `774M`, `1558M`
 
 **modelNumber** This parameter is **suggested**, though not required. The number of the model to copy over. If this is unset, all models will be copied over and the one determined by the checkpoint file will be used.
 

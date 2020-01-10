@@ -3,6 +3,5 @@ __pycache__
 models/
 checkpoint
 samples
-train.sh
 *.npz
 *.txt

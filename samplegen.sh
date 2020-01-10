@@ -1,20 +1,26 @@
 sampleName="sample"
 checkpointName="run1"
-
-if [[ $2 != "" ]]
-  then
-    checkpointName=$2
-fi
+modelName="117M"
 
 if [[ $3 != "" ]]
   then
-    sampleName=$3
+    checkpointName=$3
+fi
+
+if [[ $4 != "" ]]
+  then
+    sampleName=$4
 fi
 
 if [[ $1 != "" ]]
   then
-    echo "Copying over model-$1.* files..."
-    cp checkpoint/"$checkpointName"/model-"$1".* models/"$sampleName"
+    modelName=$1
+fi
+
+if [[ $2 != "" ]]
+  then
+    echo "Copying over model-$2.* files..."
+    cp checkpoint/"$checkpointName"/model-"$2".* models/"$sampleName"
   else
     echo "Copying over all model files..."
     cp checkpoint/"$checkpointName"/model-* models/"$sampleName"
@@ -22,9 +28,9 @@ fi
 
 echo "Creating sample $sampleName from checkpoint name $checkpointName..."
 
-cp models/117M/encoder.json models/"$sampleName"
-cp models/117M/hparams.json models/"$sampleName"
-cp models/117M/vocab.bpe models/"$sampleName"
+cp models/$4/encoder.json models/"$sampleName"
+cp models/$4/hparams.json models/"$sampleName"
+cp models/$4/vocab.bpe models/"$sampleName"
 
 cp checkpoint/"$checkpointName"/checkpoint models/"$sampleName"
 
