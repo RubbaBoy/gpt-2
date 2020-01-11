@@ -25,7 +25,7 @@ then
     python src/encode.py $2 $npzFile
   fi
 
-  echo "python src/train.py --dataset $npzFile --sample_every 200 --save_every 200 --sample_num 3 --batch_size 1" | tee train.sh
+  echo "python src/train.py --dataset $npzFile --model_name $modelName --sample_every 200 --save_every 200 --sample_num 3 --batch_size 1" | tee train.sh
 
   echo "To start training, simply run ./train.sh"
 
